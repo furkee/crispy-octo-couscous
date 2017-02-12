@@ -4,7 +4,7 @@
 #include <memory>
 #include <exception>
 
-int main(int argv, char** argc)
+int main(int argc, char** argv)
 {
     std::unique_ptr<HashTable<std::string, int>> hashTable(new HashTable<std::string, int>());
 
@@ -12,8 +12,8 @@ int main(int argv, char** argc)
     hashTable->put("asd", 5);
     hashTable->remove("asd");
 
-    std::cout << "Is naber in the table(expect -> true): " << hashTable->contains("naber") << "\n";
-    std::cout << "Is asd in the table(expect -> false): " << hashTable->contains("asd") << "\n";
+    std::cout << "Is naber in the table(expect -> true): " << hashTable->contains("naber") << "\n" ;
+    std::cout << "Is asd in the table(expect -> false): " << hashTable->contains("asd") << "\n" ;
 
     try
     {
@@ -25,18 +25,21 @@ int main(int argv, char** argc)
         std::cerr << e.what() << "\n" ;
     }
 
-    hashTable->put("asd", 11);
-    hashTable->put("asd", 16);
-    hashTable->put("ransm", 5);
-    hashTable->put("asdsafd", 5);
-    hashTable->put("assafsad", 5);
-    hashTable->put("aasdsd", 5);
-    hashTable->put("assad", 5);
-    hashTable->put("mehmet", 5);
-    hashTable->put("furkan", 5);
-    hashTable->put("ipek", 5);
+    hashTable->put("mehmet", 10);
+    hashTable->put("furkan", 6);
+    hashTable->put("ipek", 1993);
 
-    std::cout << "Getting it: " + std::to_string(hashTable->get("asd")) + "\n" ;
+    hashTable->remove("assafsad");
+
+    std::list<const std::pair<std::string, int>*> *pairList = hashTable->getPairList();
+
+    for (auto elem : (*pairList))
+        std::cout << "Key: " + elem->first + " -> Value: " + std::to_string(elem->second) + "\n" ;
+
+    // compiler will throw warning saying pairList's elements are read-only
+    //pairList->front()->second = 1231;
+
+    delete pairList;
 
     hashTable->print();
 

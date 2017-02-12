@@ -19,18 +19,12 @@ public:
     bool remove(K key);
     int get(K key);
     bool contains(K key);
+    std::list<const std::pair<K,V>*>* getPairList();
 
     void print();
 
 private:
-    struct Entry {
-        K key;
-        V value;
-
-        Entry(K key, V value) : key(key), value(value) {}
-    };
-
-    std::list<Entry*> *hashTable;
+    std::list<std::pair<K,V>*> *hashTable;
     std::hash<K> hasher;
     int size;
     int numElements;
@@ -43,7 +37,7 @@ private:
 template <class K, class V>
 HashTable<K,V>::HashTable() : size(INITIAL_SIZE), numElements(0)
 {
-    this->hashTable = new std::list<Entry*>[this->size];
+    this->hashTable = new std::list<std::pair<K,V>*>[this->size];
 }
 
 template <class K, class V>
@@ -62,7 +56,7 @@ void HashTable<K,V>::put(K key, V value)
     if (this->shouldResize())
         this->resize();
 
-    Entry *entry = new Entry(key, value);
+    std::pair<K, V> *pair = new std::pair<K, V>(key, value);
     int index = this->indexer(key);
     bool existing = false;
 
@@ -70,17 +64,20 @@ void HashTable<K,V>::put(K key, V value)
 
     for (auto elem : this->hashTable[index])
     {
-        if (elem -> key == entry -> key)
+        if (elem->first == pair->first)
         {
-            elem -> value = entry -> value;
+            elem->second = pair->second;
             existing = true;
+
+            break;
         }
     }
 
     if (!existing)
-        this->hashTable[index].push_back(entry);
-
-    this->numElements++;
+    {
+        this->hashTable[index].push_back(pair);
+        this->numElements++;
+    }
 }
 
 template <class K, class V>
@@ -93,7 +90,7 @@ bool HashTable<K,V>::remove(K key)
 
     for (auto elem : this->hashTable[index])
     {
-        if (elem->key == key)
+        if (elem->first == key)
         {
             this->hashTable[index].remove(elem);
             this->numElements--;
@@ -113,8 +110,8 @@ int HashTable<K,V>::get(K key)
     int index = this->indexer(key);
 
     for (auto elem : this->hashTable[index])
-        if (elem->key == key)
-            return elem->value;
+        if (elem->first == key)
+            return elem->second;
 
     throw std::invalid_argument("Element " + key + " is not in the table!");
 }
@@ -125,10 +122,22 @@ bool HashTable<K,V>::contains(K key)
     int index = this->indexer(key);
 
     for (auto elem : this->hashTable[index])
-        if (elem->key == key)
+        if (elem->first == key)
             return true;
     
     return false;
+}
+
+template<class K, class V>
+std::list<const std::pair<K,V>*>* HashTable<K,V>::getPairList()
+{
+    std::list<const std::pair<K,V>*> *pairList = new std::list<const std::pair<K,V>*>();
+
+    for (int i = 0; i < this->size; i++)
+        for (auto elem : this->hashTable[i])
+            pairList->push_back(elem);
+
+    return pairList;
 }
 
 template <class K, class V> 
@@ -140,15 +149,15 @@ inline bool HashTable<K,V>::shouldResize()
 template <class K, class V>
 void HashTable<K,V>::resize()
 {
-    std::list<Entry*> *oldTable = this->hashTable;
+    std::list<std::pair<K,V>*> *oldTable = this->hashTable;
     int oldSize = this->size;
 
     this->size *= 10;
-    this->hashTable = new std::list<Entry*>[this->size];
+    this->hashTable = new std::list<std::pair<K,V>*>[this->size];
 
     for (int i = 0; i < oldSize; i++)
         for (auto elem : oldTable[i])
-            this->hashTable[this->indexer(elem->key)].push_back(elem);
+            this->hashTable[this->indexer(elem->first)].push_back(elem);
 
     std::cout << "Resized hastable from size of " + std::to_string(oldSize) + " to " + std::to_string(this->size) + "\n" ;
 
@@ -170,7 +179,7 @@ void HashTable<std::string,int>::print()
     {
         for (auto elem : this->hashTable[i])
         {
-            std::cout << "[" + std::to_string(i) + "] Key: " + elem->key + " -> Value: " + std::to_string(elem->value) + "\n" ;
+            std::cout << "[" + std::to_string(i) + "] Key: " + elem->first + " -> Value: " + std::to_string(elem->second) + "\n" ;
         }
     }
 }
