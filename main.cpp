@@ -28,6 +28,7 @@ int main(int argc, char** argv)
     hashTable->put("mehmet", 10);
     hashTable->put("furkan", 6);
     hashTable->put("ipek", 1993);
+    hashTable->put("naber", 70);
 
     hashTable->remove("assafsad");
 

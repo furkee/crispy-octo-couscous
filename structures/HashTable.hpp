@@ -56,17 +56,14 @@ void HashTable<K,V>::put(K key, V value)
     if (this->shouldResize())
         this->resize();
 
-    std::pair<K, V> *pair = new std::pair<K, V>(key, value);
     int index = this->indexer(key);
     bool existing = false;
 
-    std::cout << "Index: " << index << " Key: " << key << "\n" ;
-
     for (auto elem : this->hashTable[index])
     {
-        if (elem->first == pair->first)
+        if (elem->first == key)
         {
-            elem->second = pair->second;
+            elem->second = value;
             existing = true;
 
             break;
@@ -75,6 +72,8 @@ void HashTable<K,V>::put(K key, V value)
 
     if (!existing)
     {
+        std::pair<K, V> *pair = new std::pair<K, V>(key, value);
+
         this->hashTable[index].push_back(pair);
         this->numElements++;
     }
