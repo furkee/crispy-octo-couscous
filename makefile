@@ -1,4 +1,4 @@
-files = structures/HashTable.hpp main.cpp
+files = structures/HashTable.hpp main.cpp AClass.hpp
 flags = -std=c++14
 compilables = main.cpp
 object = hash
