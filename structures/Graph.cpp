@@ -2,25 +2,25 @@
 
 #include <iostream>
 
-Graph::Graph() : numEdges(0), numVertices(0)
-{
-    refVertex = nullptr;
-}
+using std::string;
+using std::vector;
+using std::cout;
+
+Graph::Graph() : numEdges(0), numVertices(0) {}
 
 Graph::~Graph()
 {
-    if (refVertex != nullptr)
-        delete refVertex;
+    vertices.clear();
 }
 
-Vertex* Graph::addVertex(int data)
+Vertex* Graph::addVertex(string label)
 {
-    Vertex *newVertex = new Vertex(data);
+    Vertex *vertex = new Vertex(label);
 
-    if (refVertex == nullptr)
-        refVertex = newVertex;
+    vertices.push_back(vertex);
+    this->numVertices++;
 
-    return newVertex;
+    return vertex;
 }
 
 Edge* Graph::addEdge(Vertex *from, Vertex *to, int length)
@@ -31,38 +31,41 @@ Edge* Graph::addEdge(Vertex *from, Vertex *to, int length)
     Edge *edge = new Edge(from, to, length);
 
     from->edges.push_back(edge);
+    this->numEdges++;
 
     return edge;
 }
 
-/* Non member getVertices traversal */
-void getVerticesRecursive(vector<Vertex*>* vertices, Vertex* vertex, int data, int &numVisited)
+void isConnectedRecursive(Vertex *vertex, int &numVisited)
 {
-    if (vertex != nullptr && !vertex->visited)
+    if (!vertex->visited)
     {
-        if (vertex->data == data)
-            vertices->push_back(vertex);
-
         vertex->visited = true;
+        numVisited++;
+
+        cout << "Visited " + vertex->label + "\n" ;
 
         for (auto edge : (vertex->edges))
-            getVerticesRecursive(vertices, edge->to, data, numVisited);
+            isConnectedRecursive(edge->to, numVisited);
     }
 }
 
-vector<Vertex*>* Graph::getVertices(int data)
+bool Graph::isConnected()
 {
     int numVisited = 0;
-    vector<Vertex*> *vertices = new vector<Vertex*>();
 
-    getVerticesRecursive(vertices, refVertex, data, numVisited);
+    isConnectedRecursive(this->vertices.front(), numVisited);
 
-    this->setAllToFalse();
+    this->setVisitedAsFalse();
 
-    return vertices;
+    if (numVisited > this->numVertices)
+        throw std::exception(); // implementation failure
+
+    return numVisited == this->numVertices;
 }
 
-void Graph::setAllToFalse()
+void Graph::setVisitedAsFalse()
 {
-
+    for (auto vertex : vertices)
+        vertex->visited = false;
 }

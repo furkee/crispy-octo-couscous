@@ -4,18 +4,29 @@
 
 #include "../structures/Graph.hpp"
 
+#include <iostream>
+
+using std::cout;
+
 void graphTest1()
 {
     Graph graph;
 
-    Vertex *vFirst  = graph.addVertex(5);
-    Vertex *vSecond = graph.addVertex(5);
-    Edge *eFirst    = graph.addEdge(vFirst, vSecond, 1);
-    Edge *eSecond   = graph.addEdge(vSecond, vFirst, 3);
+    Vertex *vFirst  = graph.addVertex("tokat");
+    Vertex *vSecond = graph.addVertex("istanbul");
+    Edge *eFirst    = graph.addEdge(vFirst, vSecond, 1000);
+    Edge *eSecond   = graph.addEdge(vSecond, vFirst, 1000);
 
-    auto vertices = graph.getVertices(5);
+    cout << "Is graph connected(expect -> true): " << graph.isConnected() << "\n" ;
 
-    std::cout << "Size: " << (*vertices).size() << "\n" ;
+    Vertex *aloneWulf = graph.addVertex("amasya");
+
+    cout << "Is graph connected(expect -> false): " << graph.isConnected() << "\n" ;
+
+    Edge *connector = graph.addEdge(aloneWulf, vFirst, 150);
+
+    // TODO this returns false since there is no incoming edge to aloneWulf
+    cout << "Is graph connected(expect -> true): " << graph.isConnected() << "\n" ;
 }
 
 #endif
