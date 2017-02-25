@@ -45,11 +45,11 @@ private:
     int indexer(K key);
 };
 
-
+// TODO this function's implementation is intended for HashTable<int,int>
 template <class K, class V>
 std::ostream& operator << (std::ostream& os, HashTable<K,V> *hashTable)
 {
-    std::unique_ptr<std::list<const Entry<K, V>*>> entryList(hashTable->getEntryList());
+    std::unique_ptr<std::list<const Entry<K,V>*>> entryList(hashTable->getEntryList());
 
     os << "{ HashTable: [" ;
 
@@ -100,7 +100,7 @@ void HashTable<K,V>::put(K key, V value)
         }
     }
 
-    Entry<K,V> *entry = new Entry<K, V>(key, value);
+    Entry<K,V> *entry = new Entry<K,V>(key, value);
 
     this->hashTable[index].push_back(entry);
     this->numElements++;

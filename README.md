@@ -4,4 +4,10 @@ Hey, this is me trying to code :( This repo re-implements the wheel and stuff in
 
 ### TODOs
 
-* use a key that std:hash cannot hash by default
+HashTable todos
+
+* Use a key that std:hash cannot hash by default
+
+Graph todos
+
+* Read graph from file. Create an ez format.
