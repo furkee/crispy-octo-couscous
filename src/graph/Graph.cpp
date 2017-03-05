@@ -59,7 +59,7 @@ bool Graph::isConnected()
     this->setVisitedAsFalse();
 
     if (numVisited > this->numVertices)
-        throw std::exception(); // implementation failure
+        throw std::string("Implementation failure in Graph::isConnected"); // implementation failure
 
     return numVisited == this->numVertices;
 }

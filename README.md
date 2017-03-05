@@ -11,3 +11,7 @@ HashTable todos
 Graph todos
 
 * Read graph from file. Create an ez format.
+
+Test todos
+
+* Make it work! :)

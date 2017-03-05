@@ -1,2 +1,5 @@
-executeMe
-.vscode
+# Visual studio code specific folder
+.vscode/*
+
+# Cmake generated resources & final executable
+build/*

@@ -15,7 +15,7 @@ void graphTest1()
     Vertex *vFirst  = graph.addVertex("tokat");
     Vertex *vSecond = graph.addVertex("istanbul");
     Edge *eFirst    = graph.addEdge(vFirst, vSecond, 1000);
-    Edge *eSecond   = graph.addEdge(vSecond, vFirst, 1000);
+    //Edge *eSecond   = graph.addEdge(vSecond, vFirst, 1000);
 
     cout << "Is graph connected(expect -> true): " << graph.isConnected() << "\n" ;
 
@@ -27,6 +27,10 @@ void graphTest1()
 
     // TODO this returns false since there is no incoming edge to aloneWulf
     cout << "Is graph connected(expect -> true): " << graph.isConnected() << "\n" ;
+    //cout << connector->from->label + " -> " + connector->to->label + "\n" ;
+
+    for (auto neighbor : vFirst->edges)
+        cout << neighbor->from-> label + " -> " + neighbor->to-> label + "\n" ;
 }
 
 #endif
