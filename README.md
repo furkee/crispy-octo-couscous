@@ -15,3 +15,12 @@ Graph todos
 Test todos
 
 * Make it work! :)
+
+# How to build & run
+
+```
+$ cd build
+$ cmake .
+$ make
+$ ./damned
+```
