@@ -1,5 +1,6 @@
 //#include "HashTable.hpp"
 #include <graph/Graph.hpp>
+#include <utils/graph.utils/GraphReader.hpp>
 
 #include <iostream>
 
@@ -28,6 +29,11 @@ int main(int argc, char** argv)
 
     for (auto neighbor : vFirst->edges)
         cout << neighbor->from-> label + " -> " + neighbor->to-> label + "\n" ;
+
+    GraphReader reader("../resources/graph.gp");
+    Graph* roadGraph = reader.read();
+
+    std::cout << "Is road graph connected: " << roadGraph->isConnected() << "\n" ;
 
     return 0;
 }

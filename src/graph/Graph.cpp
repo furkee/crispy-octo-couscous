@@ -43,8 +43,6 @@ void isConnectedRecursive(Vertex *vertex, int &numVisited)
         vertex->visited = true;
         numVisited++;
 
-        cout << "Visited " + vertex->label + "\n" ;
-
         for (auto edge : (vertex->edges))
             isConnectedRecursive(edge->to, numVisited);
     }

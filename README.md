@@ -8,10 +8,6 @@ HashTable todos
 
 * Use a key that std:hash cannot hash by default
 
-Graph todos
-
-* Read graph from file. Create an ez format.
-
 Test todos
 
 * Make it work! :)
