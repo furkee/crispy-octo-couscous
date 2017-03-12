@@ -3,6 +3,9 @@
 #include <utils/graph.utils/GraphReader.hpp>
 
 #include <iostream>
+#include <functional>
+#include <unordered_map>
+#include <string>
 
 using std::cout;
 
@@ -14,6 +17,17 @@ int main(int argc, char** argv)
     Vertex *vSecond = graph.addVertex("istanbul");
     Edge *eFirst    = graph.addEdge(vFirst, vSecond, 1000);
     //Edge *eSecond   = graph.addEdge(vSecond, vFirst, 1000);
+
+    std::unordered_map<Vertex*, std::string> map;
+
+    map[vFirst] = "Selam";
+    map[vSecond] = "Naber";
+    map[vFirst] = "Edited";
+
+    cout << "Holaaa: " + map[vFirst] + "\n" ;
+
+    cout << "Hash(vFirst) -> " << std::to_string(std::hash<Vertex>()(*vFirst)) << "\n" ;
+    cout << "Hash(vSecond) -> " << std::to_string(std::hash<Vertex>()(*vSecond)) << "\n" ;
 
     cout << "Is graph connected(expect -> true): " << graph.isConnected() << "\n" ;
 

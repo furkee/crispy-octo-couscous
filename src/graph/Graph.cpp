@@ -1,10 +1,7 @@
 #include "Graph.hpp"
 
-#include <iostream>
-
 using std::string;
 using std::vector;
-using std::cout;
 
 Graph::Graph() : numEdges(0), numVertices(0) {}
 
@@ -26,7 +23,7 @@ Vertex* Graph::addVertex(string label)
 Edge* Graph::addEdge(Vertex *from, Vertex *to, int length)
 {
     if (from == nullptr || to == nullptr)
-        throw std::invalid_argument("An edge cannot connect a non existing vertex!");
+        throw std::string("An edge cannot connect a non existing vertex!");
 
     Edge *edge = new Edge(from, to, length);
 

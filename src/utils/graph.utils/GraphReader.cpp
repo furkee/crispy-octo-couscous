@@ -1,13 +1,11 @@
 #include "GraphReader.hpp"
 
-#include <iostream>
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <list>
 
 using std::string;
-using std::cout;
 using std::vector;
 using std::list;
 using std::ifstream;
