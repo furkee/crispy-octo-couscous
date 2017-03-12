@@ -1,6 +1,6 @@
 //#include "HashTable.hpp"
 #include <graph/Graph.hpp>
-#include <utils/graph.utils/GraphReader.hpp>
+#include <graph/utils/GraphReader.hpp>
 
 #include <iostream>
 #include <functional>
